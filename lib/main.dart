@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'model/Todo.dart';
+
 
 
 void main() {
@@ -26,6 +28,17 @@ class TodoListPage extends StatefulWidget {
 }
 
 class _TodoListPageState extends State<TodoListPage> {
+  final _items = <Todo>[];
+
+  var _todoController = TextEditingController();
+
+
+  @override
+  void dispose() {
+    _todoController.dispose();
+    super.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
