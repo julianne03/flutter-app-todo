@@ -106,7 +106,7 @@ class _TodoListPageState extends State<TodoListPage> {
 
   void _addTodo(Todo todo) {
       Firestore.instance
-      .collection('Todo')
+      .collection('todo')
       .add({'title':todo.title, 'isDone':todo.isDone});
       _todoController.text = '';
   }
