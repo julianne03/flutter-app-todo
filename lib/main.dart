@@ -93,4 +93,23 @@ class _TodoListPageState extends State<TodoListPage> {
       ),
     );
   }
+
+  void _addTodo(Todo todo) {
+    setState(() {
+      _items.add(todo);
+      _todoController.text = '';
+    });
+  }
+
+  void _deleteTodo(Todo todo) {
+    setState(() {
+      _items.remove(todo);
+    });
+  }
+
+  void _toggleTodo(Todo todo) {
+    setState(() {
+      todo.isDone = !todo.isDone;
+    });
+  }
 }
