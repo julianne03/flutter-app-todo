@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
 class Todo {
-  bool isDone = false;
+  bool isDone;
   String title;
 
-  Todo(this.title);
+  Todo(this.title, {this.isDone = false});
+
+
 }
 

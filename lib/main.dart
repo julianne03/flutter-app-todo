@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 
 import 'model/Todo.dart';
 
@@ -62,10 +63,20 @@ class _TodoListPageState extends State<TodoListPage> {
                 ),
               ],
             ),
-            Expanded(
-              child: ListView(
-                children: _items.map((todo) => _buildItemWidget(todo)).toList(),
-              ),
+            StreamBuilder<QuerySnapshot>(
+              stream: Firestore.instance.collection('todo').snapshots(),
+              builder: (context, snapshot) {
+                if (!snapshot.hasData) {
+                  return CircularProgressIndicator();
+                }
+                final documents = snapshot.data.documents;
+                return Expanded(
+                  child: ListView(
+                    children: documents
+                      .map((doc) => _buildItemWidget(doc)).toList(),
+                  ),
+                );
+              }
             )
           ],
         ),
@@ -73,7 +84,8 @@ class _TodoListPageState extends State<TodoListPage> {
     );
   }
 
-  Widget _buildItemWidget(Todo todo) {
+  Widget _buildItemWidget(DocumentSnapshot doc) {
+    final todo = Todo(doc['title'], isDone: doc['isDone']);
     return ListTile(
       onTap: () => _toggleTodo(todo),
       title: Text(
