@@ -72,4 +72,25 @@ class _TodoListPageState extends State<TodoListPage> {
       ),
     );
   }
+
+  Widget _buildItemWidget(Todo todo) {
+    return ListTile(
+      onTap: () {
+
+      },
+      title: Text(
+        todo.title,
+        style: todo.isDone ?
+        TextStyle(
+          decoration: TextDecoration.lineThrough,
+          fontStyle: FontStyle.italic,
+        )
+            : null,
+      ),
+      trailing: IconButton(
+        icon: Icon(Icons.delete_forever),
+        onPressed: () {},
+      ),
+    );
+  }
 }
