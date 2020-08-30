@@ -29,7 +29,6 @@ class TodoListPage extends StatefulWidget {
 }
 
 class _TodoListPageState extends State<TodoListPage> {
-  final _items = <Todo>[];
 
   var _todoController = TextEditingController();
 
@@ -99,7 +98,7 @@ class _TodoListPageState extends State<TodoListPage> {
       ),
       trailing: IconButton(
         icon: Icon(Icons.delete_forever),
-        onPressed: () => _deleteTodo(todo),
+        onPressed: () => _deleteTodo(doc),
       ),
     );
   }
@@ -111,10 +110,8 @@ class _TodoListPageState extends State<TodoListPage> {
       _todoController.text = '';
   }
 
-  void _deleteTodo(Todo todo) {
-    setState(() {
-      _items.remove(todo);
-    });
+  void _deleteTodo(DocumentSnapshot doc) {
+    Firestore.instance.collection('todo').document(doc.documentID).delete();
   }
 
   void _toggleTodo(DocumentSnapshot doc) {
