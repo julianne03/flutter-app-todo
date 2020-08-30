@@ -87,7 +87,7 @@ class _TodoListPageState extends State<TodoListPage> {
   Widget _buildItemWidget(DocumentSnapshot doc) {
     final todo = Todo(doc['title'], isDone: doc['isDone']);
     return ListTile(
-      onTap: () => _toggleTodo(todo),
+      onTap: () => _toggleTodo(doc),
       title: Text(
         todo.title,
         style: todo.isDone ?
@@ -117,9 +117,9 @@ class _TodoListPageState extends State<TodoListPage> {
     });
   }
 
-  void _toggleTodo(Todo todo) {
-    setState(() {
-      todo.isDone = !todo.isDone;
+  void _toggleTodo(DocumentSnapshot doc) {
+    Firestore.instance.collection('todo').document(doc.documentID).updateData({
+      'isDone' : !doc['isDone'],
     });
   }
 }
